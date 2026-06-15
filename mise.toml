@@ -1,3 +1,42 @@
 [tools]
 go = "1.26.4"
 node = "24.16.0"
+
+[tasks.setup]
+description = "依存パッケージをインストールする"
+run = """
+npm ci --prefix frontend
+cd backend
+go mod download
+"""
+
+[tasks."dev:frontend"]
+description = "フロントエンドの開発サーバーを起動する"
+dir = "frontend"
+run = "npm run dev"
+raw = true
+
+[tasks."dev:backend"]
+description = "バックエンドの開発サーバーを起動する"
+dir = "backend"
+run = "go run ."
+raw = true
+
+[tasks."lint:frontend"]
+description = "フロントエンドを lint する"
+dir = "frontend"
+run = "npm run lint"
+
+[tasks."build:frontend"]
+description = "フロントエンドをビルドする"
+dir = "frontend"
+run = "npm run build"
+
+[tasks."test:backend"]
+description = "バックエンドをテストする"
+dir = "backend"
+run = "go test ./..."
+
+[tasks.check]
+description = "lint・ビルド・テストをまとめて実行する"
+depends = ["lint:frontend", "build:frontend", "test:backend"]

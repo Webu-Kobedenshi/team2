@@ -27,6 +27,16 @@ description = "フロントエンドを lint する"
 dir = "frontend"
 run = "npm run lint"
 
+[tasks."format:frontend"]
+description = "フロントエンドをフォーマットする"
+dir = "frontend"
+run = "npm run format"
+
+[tasks."format:check:frontend"]
+description = "フロントエンドのフォーマットを確認する"
+dir = "frontend"
+run = "npm run format:check"
+
 [tasks."build:frontend"]
 description = "フロントエンドをビルドする"
 dir = "frontend"
@@ -39,4 +49,4 @@ run = "go test ./..."
 
 [tasks.check]
 description = "lint・ビルド・テストをまとめて実行する"
-depends = ["lint:frontend", "build:frontend", "test:backend"]
+depends = ["format:check:frontend", "lint:frontend", "build:frontend", "test:backend"]

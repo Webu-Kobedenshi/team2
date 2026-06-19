@@ -1,6 +1,6 @@
 # team2
 
-概要はこちらのリンクから <br />
+概要はこちらのリンクから
 [PRD for 共通点ファインダー](https://docs.google.com/document/d/10SE6zCxtZZPOGdpi6rQ895A31tyqRJyesEvKglmfsF0/edit?tab=t.0#heading=h.pbszkhi4d4m1)
 
 ## ディレクトリ構成
@@ -28,7 +28,7 @@ mise run setup
 - `mise install`: `mise.toml` に指定された Node.js と Go をインストールします。
 - `mise run setup`: npm パッケージと Go モジュールをインストールします。
 
-セットアップを確認するには、lint、ビルド、テストをまとめて実行します。
+セットアップを確認するには、フォーマット確認、lint、ビルド、テストをまとめて実行します。
 
 ```bash
 mise run check
@@ -65,3 +65,8 @@ mise run dev:frontend
 ```bash
 cp .env.example .env
 ```
+
+## 開発の進め方
+
+Issue の確認、ブランチ作成、Pull Request 作成、レビューの流れは
+[CONTRIBUTING.md](CONTRIBUTING.md) を見てください。

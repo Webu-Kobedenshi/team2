@@ -1,4 +1,8 @@
-export function Home() {
+type HomeProps = {
+  onShowHowToPlay: () => void;
+};
+
+export function Home({ onShowHowToPlay }: HomeProps) {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-12 sm:px-8">
       <div className="grid gap-8">
@@ -35,6 +39,14 @@ export function Home() {
           >
             スタート
           </button>
+
+          <button
+  type="button"
+  onClick={onShowHowToPlay}
+  className="rounded-lg bg-slate-950 px-6 py-3 text-base font-bold text-white transition hover:bg-slate-800"
+>
+  遊び方を見る
+</button>
 
           <p className="text-sm text-slate-500">
             ボタンを押してゲームを開始します。

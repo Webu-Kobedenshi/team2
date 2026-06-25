@@ -1,43 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
-export const Home: React.FC = () => {
-  const [screen, setScreen] = useState<"home" | "next">("home");
+type Props = {
+  onStart: () => void;
+};
 
-  if (screen === "next") {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center p-4 bg-sky-100">
-        <div className="w-full max-w-sm min-h-[580px] sm:min-h-[620px] bg-emerald-50/90 rounded-[32px] shadow-md border border-white flex flex-col items-center justify-between py-10 px-4 sm:px-6 overflow-hidden select-none">
-          <div className="bg-white border border-slate-100 py-3.5 px-6 sm:px-8 rounded-2xl shadow-sm w-full max-w-[300px]">
-            <h1 className="text-xl sm:text-2xl font-bold text-sky-900 text-center tracking-wider whitespace-nowrap">
-              共通点ファインダー
-            </h1>
-          </div>
-
-          <div className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm w-full max-w-[320px] flex-1 my-6 flex flex-col items-center justify-center text-center">
-            <h2 className="text-lg font-bold text-sky-800 mb-3">
-              設定画面（未定）
-            </h2>
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed px-2">
-              ここからゲーム設定やプレイ人数選択など、次の画面へ繋がります。
-            </p>
-            <div className="w-16 h-16 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mt-6">
-              <span className="font-bold text-xs uppercase tracking-widest text-sky-700">
-                Next
-              </span>
-            </div>
-          </div>
-
-          <button
-            onClick={() => setScreen("home")}
-            className="w-full max-w-[240px] text-lg font-bold text-sky-700 bg-sky-100 hover:bg-sky-200 py-3.5 rounded-full shadow-sm transition-colors duration-200 active:scale-98 cursor-pointer text-center"
-          >
-            もどる
-          </button>
-        </div>
-      </div>
-    );
-  }
-
+export const Home: React.FC<Props> = ({ onStart }) => {
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-sky-100">
       <div className="w-full max-w-sm min-h-[580px] sm:min-h-[620px] bg-emerald-50/90 rounded-[32px] shadow-md border border-white flex flex-col items-center justify-between py-10 px-4 sm:px-6 overflow-hidden select-none">
@@ -83,7 +50,8 @@ export const Home: React.FC = () => {
         </div>
 
         <button
-          onClick={() => setScreen("next")}
+          type="button"
+          onClick={onStart}
           className="w-full max-w-[240px] text-lg font-bold text-white bg-emerald-500 hover:bg-emerald-600 py-3.5 rounded-full shadow-sm transition-colors duration-200 active:scale-98 cursor-pointer"
         >
           はじめる

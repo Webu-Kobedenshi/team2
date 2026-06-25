@@ -18,6 +18,6 @@
 
 ## 関連 Issue
 
-<!-- 例: closes #1 -->
+<!-- 完了するIssueがあれば Closes #1 のように書く -->
 
 closes #

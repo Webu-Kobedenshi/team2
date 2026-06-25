@@ -6,7 +6,9 @@ export function HowToPlay({ onBack }: HowToPlayProps) {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-12">
       <div className="rounded-xl bg-white p-8 shadow-lg">
-        <h1 className="mb-6 text-4xl font-bold">遊び方</h1>
+        <h1 className="mb-6 text-4xl font-bold">
+        遊び方
+        </h1>
 
         <ol className="list-decimal space-y-3 pl-6">
           <li>スタートボタンを押します。</li>

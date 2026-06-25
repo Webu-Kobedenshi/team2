@@ -7,7 +7,9 @@ export function Home({ onShowHowToPlay }: HomeProps) {
     <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-12 sm:px-8">
       <div className="grid gap-8">
         <section className="grid gap-4">
-          <p className="text-sm font-bold text-blue-600">共通点ファインダー</p>
+          <p className="text-sm font-bold text-blue-600">
+            共通点ファインダー
+          </p>
 
           <h1 className="max-w-3xl text-4xl font-bold leading-tight text-slate-950 sm:text-6xl">
             みんなで共通点を見つけよう！
@@ -39,12 +41,12 @@ export function Home({ onShowHowToPlay }: HomeProps) {
           </button>
 
           <button
-            type="button"
-            onClick={onShowHowToPlay}
-            className="rounded-lg bg-slate-950 px-6 py-3 text-base font-bold text-white transition hover:bg-slate-800"
-          >
-            遊び方を見る
-          </button>
+  type="button"
+  onClick={onShowHowToPlay}
+  className="rounded-lg bg-slate-950 px-6 py-3 text-base font-bold text-white transition hover:bg-slate-800"
+>
+  遊び方を見る
+</button>
 
           <p className="text-sm text-slate-500">
             ボタンを押してゲームを開始します。

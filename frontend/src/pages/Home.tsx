@@ -1,57 +1,121 @@
 type HomeProps = {
+  onStart: () => void;
   onShowHowToPlay: () => void;
 };
 
-export function Home({ onShowHowToPlay }: HomeProps) {
+export function Home({ onStart, onShowHowToPlay }: HomeProps) {
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 py-12 sm:px-8">
-      <div className="grid gap-8">
-        <section className="grid gap-4">
-          <p className="text-sm font-bold text-blue-600">
-            共通点ファインダー
+    <main className="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-50 to-yellow-100 flex items-center justify-center px-6 py-10">
+      <div className="w-full max-w-5xl rounded-3xl bg-white/80 backdrop-blur-md shadow-2xl p-10">
+
+        {/* Header */}
+        <div className="text-center space-y-5">
+
+          <div className="text-7xl">
+            🤝✨
+          </div>
+
+          <p className="text-sky-600 font-bold tracking-widest">
+            FRIENDSHIP FINDER
           </p>
 
-          <h1 className="max-w-3xl text-4xl font-bold leading-tight text-slate-950 sm:text-6xl">
-            みんなで共通点を見つけよう！
+          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-800">
+            共通点ファインダー
           </h1>
 
-          <p className="max-w-2xl text-base text-slate-600 sm:text-lg">
-            質問に答えながら参加者同士の共通点を探すゲームです。
-            新しい話題や意外な発見を楽しみましょう。
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed">
+            質問に答えながら、
+            <span className="font-bold text-sky-600">
+              「みんなの共通点」
+            </span>
+            を見つけるゲームです。
+            <br />
+            新しい発見や楽しい会話を通して、
+            もっと仲良くなりましょう！
           </p>
-        </section>
 
-        <section className="rounded-xl bg-white p-6 shadow">
-          <h2 className="mb-4 text-2xl font-bold">遊び方</h2>
+        </div>
 
-          <ol className="list-decimal pl-5 space-y-2 text-slate-700">
-            <li>スタートボタンを押します。</li>
-            <li>質問に答えます。</li>
-            <li>他の参加者との共通点を確認します。</li>
-            <li>見つけた共通点について話してみましょう。</li>
-          </ol>
-        </section>
+        {/* Features */}
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="grid md:grid-cols-3 gap-6 mt-14">
+
+          <div className="rounded-2xl bg-sky-50 p-6 shadow hover:scale-105 transition">
+            <div className="text-4xl mb-3">
+              💬
+            </div>
+
+            <h2 className="font-bold text-xl mb-2">
+              楽しく話そう
+            </h2>
+
+            <p className="text-slate-600">
+              お互いのことをもっと知るきっかけになります。
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-yellow-50 p-6 shadow hover:scale-105 transition">
+            <div className="text-4xl mb-3">
+              🌸
+            </div>
+
+            <h2 className="font-bold text-xl mb-2">
+              共通点を発見
+            </h2>
+
+            <p className="text-slate-600">
+              意外な共通点が見つかるかもしれません。
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-green-50 p-6 shadow hover:scale-105 transition">
+            <div className="text-4xl mb-3">
+              🤗
+            </div>
+
+            <h2 className="font-bold text-xl mb-2">
+              仲良くなる
+            </h2>
+
+            <p className="text-slate-600">
+              みんなで楽しい時間を過ごしましょう！
+            </p>
+          </div>
+
+        </div>
+
+        {/* Buttons */}
+
+        <div className="flex flex-col md:flex-row justify-center gap-5 mt-14">
+
           <button
             type="button"
-            className="rounded-lg bg-slate-950 px-6 py-3 text-base font-bold text-white transition hover:bg-slate-800"
+            onClick={onStart}
+            className="rounded-full bg-sky-500 px-10 py-4 text-lg font-bold text-white shadow-lg hover:bg-sky-600 hover:scale-105 transition duration-300"
           >
-            スタート
+            🎮 ゲームを始める
           </button>
 
           <button
-  type="button"
-  onClick={onShowHowToPlay}
-  className="rounded-lg bg-slate-950 px-6 py-3 text-base font-bold text-white transition hover:bg-slate-800"
->
-  遊び方を見る
-</button>
+            type="button"
+            onClick={onShowHowToPlay}
+            className="rounded-full bg-white border-2 border-sky-500 px-10 py-4 text-lg font-bold text-sky-600 hover:bg-sky-50 hover:scale-105 transition duration-300"
+          >
+            📖 遊び方を見る
+          </button>
 
-          <p className="text-sm text-slate-500">
-            ボタンを押してゲームを開始します。
-          </p>
         </div>
+
+        {/* Footer */}
+
+        <div className="mt-14 text-center">
+
+          <p className="text-slate-500">
+            💙 Let's discover what makes your friendship special. 💙
+          </p>
+
+        </div>
+
       </div>
     </main>
   );

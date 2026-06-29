@@ -20,9 +20,9 @@ export const Home: React.FC<Props> = ({ onStart }) => {
     >
       <div className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm w-full max-w-[320px] flex flex-col justify-center">
         <h2 className="text-lg font-bold text-sky-800 border-b border-slate-100 pb-2 mb-4 text-center">
-          あそびかた
+          遊び方
         </h2>
-        <ul className="text-slate-600 text-sm space-y-3.5 font-bold list-none pl-0">
+        <ol className="text-slate-600 text-sm space-y-3.5 font-bold list-none pl-0">
           <li className="flex items-center gap-3">
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs">
               1
@@ -33,7 +33,7 @@ export const Home: React.FC<Props> = ({ onStart }) => {
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs">
               2
             </span>
-            <span>いっしょに遊ぶ人数を選ぶ</span>
+            <span>一緒に遊ぶ人数を選ぶ</span>
           </li>
           <li className="flex items-center gap-3">
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs">
@@ -50,7 +50,7 @@ export const Home: React.FC<Props> = ({ onStart }) => {
           <li className="flex items-center justify-center text-emerald-800 font-black bg-emerald-100/60 p-2.5 rounded-xl border border-emerald-200/50 mt-1 text-center">
             <span>みんなの共通点が見つかるよ！</span>
           </li>
-        </ul>
+        </ol>
       </div>
     </StartCard>
   );

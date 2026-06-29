@@ -24,7 +24,7 @@ export const Home: React.FC<Props> = ({ onStart }) => {
         </h2>
         <ol className="text-slate-600 text-sm space-y-3.5 font-bold list-none pl-0">
           <li className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs">
+           <span className="flex items-center justify-center w-5 h-5 rounded-full bg-sky-100 text-sky-700 text-xs">
               1
             </span>
             <span>「はじめる」ボタンを押す</span>

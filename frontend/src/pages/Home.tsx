@@ -24,11 +24,6 @@ export function Home() {
         fontFamily: '"Noto Sans JP", sans-serif',
       }}
     >
-      {/* Google Fonts のインポート */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
-      `}</style>
-
       <div className="grid gap-8">
         <section className="grid gap-6 justify-items-center">
           <div

@@ -1,3 +1,5 @@
+import { ArrowRight, BookOpen, UsersRound } from "lucide-react";
+
 const howToSteps = [
   {
     title: "人数を選ぶ",
@@ -35,8 +37,9 @@ export function Home() {
         className="relative mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-md flex-col justify-center gap-8 sm:max-w-lg"
       >
         <div className="grid gap-4">
-          <p className="w-fit flex items-center gap-1.5 rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-bold text-emerald-800">
-            <span>👥</span> 2〜4人・1台で遊べる
+          <p className="flex w-fit items-center gap-1.5 rounded-full bg-emerald-100 px-3.5 py-1 text-xs font-bold text-emerald-800">
+            <UsersRound aria-hidden="true" className="h-4 w-4" />
+            2〜4人・1台で遊べる
           </p>
           <div className="grid gap-3">
             <h1
@@ -54,8 +57,9 @@ export function Home() {
         </div>
 
         <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-          <h2 className="text-center text-lg font-bold text-slate-800">
-            📖 遊び方
+          <h2 className="flex items-center justify-center gap-2 text-lg font-bold text-slate-800">
+            <BookOpen aria-hidden="true" className="h-5 w-5 text-sky-500" />
+            遊び方
           </h2>
           <ol className="relative mt-5 grid gap-4">
             {howToSteps.map((step, index) => (
@@ -89,7 +93,7 @@ export function Home() {
               className="text-sm font-bold text-sky-500 hover:text-sky-600 flex items-center gap-1 transition active:scale-[0.98]"
             >
               <span>詳しい遊び方を画像で見る</span>
-              <span>➔</span>
+              <ArrowRight aria-hidden="true" className="h-4 w-4" />
             </button>
           </div>
         </div>

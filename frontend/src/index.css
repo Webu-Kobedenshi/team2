@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans:
-    "Hiragino Maru Gothic ProN", "ヒラギノ丸ゴ ProN", "Kosugi Maru", sans-serif;
+  --font-sans: "Kosugi Maru", sans-serif;
 }
 
 body {

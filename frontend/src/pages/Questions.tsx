@@ -4,6 +4,7 @@ type QuestionProps = {
   currentQuestion: number;
   totalQuestions: number;
   question: string;
+  emoji: string;
   choices: string[];
   selectedAnswer: string;
   onSelectAnswer: (answer: string) => void;
@@ -17,6 +18,7 @@ export function Questions({
   currentQuestion,
   totalQuestions,
   question,
+  emoji,
   choices,
   selectedAnswer,
   onSelectAnswer,
@@ -62,7 +64,7 @@ export function Questions({
         {/* Question */}
 
         <div className="mt-10 rounded-3xl bg-sky-50 p-8 text-center shadow">
-          <div className="text-5xl mb-5">🌈</div>
+          <div className="text-5xl mb-5">{emoji}</div>
 
           <h2 className="text-3xl font-bold text-slate-800">{question}</h2>
         </div>

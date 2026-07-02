@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Home } from "./pages/Home";
 import { HowToPlay } from "./pages/HowToPlay";
 import { PlayerSelect } from "./pages/PlayerSelect";
@@ -27,14 +26,10 @@ type Answer = {
 
 function App() {
   const [page, setPage] = useState<Page>("home");
-
   const [totalPlayers, setTotalPlayers] = useState(2);
   const [currentPlayer, setCurrentPlayer] = useState(1);
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
-
   const [selectedAnswer, setSelectedAnswer] = useState("");
-
   const [answers, setAnswers] = useState<Answer[]>([]);
 
   const totalQuestions = questions.length;
@@ -115,7 +110,6 @@ function App() {
       }
 
       const firstAnswer = answersForQuestion[0].answer;
-
       const everyoneSame = answersForQuestion.every(
         (a) => a.answer === firstAnswer,
       );
@@ -179,6 +173,7 @@ function App() {
           currentQuestion={currentQuestion}
           totalQuestions={totalQuestions}
           question={current.question}
+          emoji={current.emoji}
           choices={current.choices}
           selectedAnswer={selectedAnswer}
           onSelectAnswer={setSelectedAnswer}
@@ -197,5 +192,4 @@ function App() {
       return null;
   }
 }
-
 export default App;

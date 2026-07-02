@@ -19,8 +19,7 @@ export function Button({
     "rounded-full px-8 py-4 text-lg font-bold transition-all duration-300 shadow-lg";
 
   const styles = {
-    primary:
-      "bg-sky-500 text-white hover:bg-sky-600 hover:scale-105",
+    primary: "bg-sky-500 text-white hover:bg-sky-600 hover:scale-105",
 
     secondary:
       "bg-white border-2 border-sky-500 text-sky-600 hover:bg-sky-50 hover:scale-105",

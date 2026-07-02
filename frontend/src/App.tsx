@@ -105,35 +105,33 @@ function App() {
   const current = questions[currentQuestion];
 
   const commonPoints = questions
-  .map((question) => {
-    const answersForQuestion = answers.filter(
-      (a) => a.questionId === question.id
+    .map((question) => {
+      const answersForQuestion = answers.filter(
+        (a) => a.questionId === question.id,
+      );
+
+      if (answersForQuestion.length !== totalPlayers) {
+        return null;
+      }
+
+      const firstAnswer = answersForQuestion[0].answer;
+
+      const everyoneSame = answersForQuestion.every(
+        (a) => a.answer === firstAnswer,
+      );
+
+      if (!everyoneSame) {
+        return null;
+      }
+
+      return {
+        question: question.question,
+        answer: firstAnswer,
+      };
+    })
+    .filter(
+      (item): item is { question: string; answer: string } => item !== null,
     );
-
-    if (answersForQuestion.length !== totalPlayers) {
-      return null;
-    }
-
-    const firstAnswer = answersForQuestion[0].answer;
-
-    const everyoneSame = answersForQuestion.every(
-      (a) => a.answer === firstAnswer
-    );
-
-    if (!everyoneSame) {
-      return null;
-    }
-
-    return {
-      question: question.question,
-      answer: firstAnswer,
-    };
-  })
-  .filter(
-    (
-      item
-    ): item is { question: string; answer: string } => item !== null
-  );
 
   switch (page) {
     case "home":
@@ -190,19 +188,10 @@ function App() {
       );
 
     case "loading":
-      return (
-        <Loading
-          onShowResult={() => setPage("result")}
-        />
-      );
+      return <Loading onShowResult={() => setPage("result")} />;
 
     case "result":
-      return (
-        <Result
-          commonPoints={commonPoints}
-          onRestart={restartGame}
-        />
-      );
+      return <Result commonPoints={commonPoints} onRestart={restartGame} />;
 
     default:
       return null;

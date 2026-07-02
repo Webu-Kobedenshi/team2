@@ -5,14 +5,10 @@ type LoadingProps = {
 export function Loading({ onShowResult }: LoadingProps) {
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-50 to-yellow-100 flex items-center justify-center px-6">
-
       <div className="w-full max-w-xl rounded-3xl bg-white/80 backdrop-blur-md shadow-2xl p-10 text-center">
-
         {/* Emoji */}
 
-        <div className="text-7xl animate-bounce">
-          🤝✨
-        </div>
+        <div className="text-7xl animate-bounce">🤝✨</div>
 
         {/* Title */}
 
@@ -31,29 +27,22 @@ export function Loading({ onShowResult }: LoadingProps) {
         {/* Progress */}
 
         <div className="mt-10">
-
           <div className="h-4 w-full overflow-hidden rounded-full bg-slate-200">
-
             <div className="h-full w-3/4 animate-pulse rounded-full bg-sky-500"></div>
-
           </div>
-
         </div>
 
         {/* Loading Dots */}
 
         <div className="mt-8 flex justify-center gap-3 text-3xl">
-
           <span className="animate-bounce">💙</span>
           <span className="animate-bounce delay-100">💛</span>
           <span className="animate-bounce delay-200">💚</span>
-
         </div>
 
         {/* Message */}
 
         <div className="mt-10 rounded-2xl bg-sky-50 p-5">
-
           <p className="text-slate-700">
             🌸
             <br />
@@ -61,7 +50,6 @@ export function Loading({ onShowResult }: LoadingProps) {
             <br />
             どんな共通点が見つかるでしょうか？
           </p>
-
         </div>
 
         {/* Button */}
@@ -73,9 +61,7 @@ export function Loading({ onShowResult }: LoadingProps) {
         >
           🎉 結果を見る
         </button>
-
       </div>
-
     </main>
   );
 }

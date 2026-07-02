@@ -27,16 +27,11 @@ export function Questions({
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sky-100 via-cyan-50 to-yellow-100 flex items-center justify-center px-6 py-10">
-
       <div className="w-full max-w-3xl rounded-3xl bg-white/80 backdrop-blur-md shadow-2xl p-10">
-
         {/* Header */}
 
         <div className="text-center">
-
-          <div className="text-6xl">
-            🤝
-          </div>
+          <div className="text-6xl">🤝</div>
 
           <h1 className="mt-3 text-4xl font-extrabold text-slate-800">
             Friendship Finder
@@ -45,52 +40,37 @@ export function Questions({
           <p className="mt-2 text-sky-600 font-bold">
             PLAYER {currentPlayer} / {totalPlayers}
           </p>
-
         </div>
 
         {/* Progress */}
 
         <div className="mt-8">
-
           <div className="flex justify-between text-sm text-slate-600 mb-2">
-
             <span>質問 {currentQuestion + 1}</span>
 
             <span>{totalQuestions} 問</span>
-
           </div>
 
           <div className="w-full h-4 rounded-full bg-slate-200">
-
             <div
               className="h-4 rounded-full bg-sky-500 transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
-
           </div>
-
         </div>
 
         {/* Question */}
 
         <div className="mt-10 rounded-3xl bg-sky-50 p-8 text-center shadow">
+          <div className="text-5xl mb-5">🌈</div>
 
-          <div className="text-5xl mb-5">
-            🌈
-          </div>
-
-          <h2 className="text-3xl font-bold text-slate-800">
-            {question}
-          </h2>
-
+          <h2 className="text-3xl font-bold text-slate-800">{question}</h2>
         </div>
 
         {/* Answers */}
 
         <div className="grid gap-4 mt-8">
-
           {choices.map((choice) => (
-
             <button
               key={choice}
               type="button"
@@ -104,19 +84,14 @@ export function Questions({
                 }
               `}
             >
-
               {choice}
-
             </button>
-
           ))}
-
         </div>
 
         {/* Bottom */}
 
         <div className="flex justify-between mt-10">
-
           <button
             onClick={onPrevious}
             className="rounded-full border-2 border-sky-500 px-8 py-3 font-bold text-sky-600 hover:bg-sky-50 transition"
@@ -137,11 +112,8 @@ export function Questions({
           >
             次へ →
           </button>
-
         </div>
-
       </div>
-
     </main>
   );
 }

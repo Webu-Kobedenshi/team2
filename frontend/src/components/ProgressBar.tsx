@@ -6,7 +6,7 @@ type ProgressBarProps = {
 export function ProgressBar({ current, total }: ProgressBarProps) {
   const percentage = (current / total) * 100;
 
-  let message = "";
+  let message: string;
 
   if (percentage < 30) {
     message = "🌱 ゲームを始めましょう！";

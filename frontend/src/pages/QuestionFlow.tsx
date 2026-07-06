@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 
 import { MobilePageShell } from "../components/MobilePageShell";
 import { QuestionCard } from "../components/QuestionCard";
 import { paths } from "../routes";
 
+const validPlayerCounts = [2, 3, 4];
+
 export function QuestionFlow() {
+  const [searchParams] = useSearchParams();
+  const playerCount = Number(searchParams.get("players"));
+
+  if (!validPlayerCounts.includes(playerCount)) {
+    return <Navigate to={paths.players} replace />;
+  }
+
   return (
     <MobilePageShell>
       <div className="grid gap-6">
@@ -15,6 +24,18 @@ export function QuestionFlow() {
           </h1>
           <p className="leading-7 text-slate-600">
             ここに質問文、回答選択肢、次の人へ渡す案内を実装します。
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-blue-100 bg-blue-50 p-5">
+          <p className="text-sm font-bold text-blue-600">
+            {playerCount}人で遊びます
+          </p>
+          <p className="mt-2 text-xl font-black text-slate-900">
+            1人目に端末を渡してください
+          </p>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            回答フローでは、この人数を使って参加者ごとに質問を回します。
           </p>
         </div>
 

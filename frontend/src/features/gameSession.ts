@@ -15,7 +15,7 @@ export type GameSession = {
 };
 
 export const DEFAULT_QUESTION_IDS = [
-  "holiday",
+  "bloodType",
   "food",
   "music",
   "movie",

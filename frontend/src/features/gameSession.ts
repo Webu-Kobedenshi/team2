@@ -16,13 +16,13 @@ export type GameSession = {
 
 export const DEFAULT_QUESTION_IDS = [
   "bloodType",
-  "food",
-  "music",
-  "movie",
-  "travel",
-  "morning",
-  "communication",
-  "challenge",
+  "usualStyle",
+  "holidayStyle",
+  "uncomfortablePlace",
+  "specialAbility",
+  "loveOrFriendship",
+  "decisionStyle",
+  "motivation",
 ] as const satisfies readonly QuestionId[];
 
 const GAME_SESSION_STORAGE_KEY = "commonFinderGame";

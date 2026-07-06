@@ -13,17 +13,77 @@ const validPlayerCounts = [2, 3, 4];
 const playerLabels = ["A", "B", "C", "D"];
 type QuestionScreen = "intro" | "question";
 
-const bloodTypeQuestion = {
-  id: "bloodType",
-  label: "質問 1 / 8",
-  text: "あなたの血液型を選んでください",
-  options: [
-    { id: "a", label: "A" },
-    { id: "b", label: "B" },
-    { id: "o", label: "O" },
-    { id: "ab", label: "AB" },
-  ],
-};
+const questions = [
+  {
+    id: "bloodType",
+    text: "あなたの血液型を選んでください",
+    options: [
+      { id: "a", label: "A" },
+      { id: "b", label: "B" },
+      { id: "o", label: "O" },
+      { id: "ab", label: "AB" },
+    ],
+  },
+  {
+    id: "usualStyle",
+    text: "普段は？",
+    options: [
+      { id: "outdoor", label: "アウトドア" },
+      { id: "indoor", label: "インドア" },
+    ],
+  },
+  {
+    id: "holidayStyle",
+    text: "休日は？",
+    options: [
+      { id: "withPeople", label: "人と過ごしたい" },
+      { id: "aloneTime", label: "1人の時間大事" },
+    ],
+  },
+  {
+    id: "uncomfortablePlace",
+    text: "苦手な場所は？",
+    options: [
+      { id: "highPlace", label: "高いところ" },
+      { id: "hauntedHouse", label: "お化け屋敷" },
+      { id: "narrowPlace", label: "狭いところ" },
+    ],
+  },
+  {
+    id: "specialAbility",
+    text: "1日だけ能力を得るなら？",
+    options: [
+      { id: "invisible", label: "透明人間" },
+      { id: "teleport", label: "瞬間移動" },
+      { id: "stopTime", label: "時間停止" },
+      { id: "readMind", label: "心を読む" },
+    ],
+  },
+  {
+    id: "loveOrFriendship",
+    text: "1番の親友と好きな人が被ったら",
+    options: [
+      { id: "love", label: "恋愛" },
+      { id: "friendship", label: "友情" },
+    ],
+  },
+  {
+    id: "decisionStyle",
+    text: "行動は？",
+    options: [
+      { id: "intuition", label: "直感で" },
+      { id: "indecisive", label: "優柔不断" },
+    ],
+  },
+  {
+    id: "motivation",
+    text: "モチベーションが上がるのは？",
+    options: [
+      { id: "recognized", label: "誰かに評価されたとき" },
+      { id: "selfSatisfied", label: "自分が納得できた時" },
+    ],
+  },
+];
 
 export function QuestionFlow() {
   const navigate = useNavigate();
@@ -31,6 +91,7 @@ export function QuestionFlow() {
   const playerCount = Number(searchParams.get("players"));
   const gameSession = loadGameSession();
   const [screen, setScreen] = useState<QuestionScreen>("intro");
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
   if (!validPlayerCounts.includes(playerCount) || !gameSession) {
@@ -40,6 +101,8 @@ export function QuestionFlow() {
   const activeGameSession = gameSession;
   const currentPlayerIndex = activeGameSession.playerOrder[0];
   const currentPlayerLabel = playerLabels[currentPlayerIndex];
+  const currentQuestion = questions[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
   function handleNext() {
     if (!selectedAnswer) {
@@ -49,12 +112,19 @@ export function QuestionFlow() {
     const nextSession = savePlayerAnswer(
       activeGameSession,
       currentPlayerIndex,
-      bloodTypeQuestion.id,
+      currentQuestion.id,
       selectedAnswer,
     );
 
     saveGameSession(nextSession);
-    navigate(paths.result);
+
+    if (isLastQuestion) {
+      navigate(paths.result);
+      return;
+    }
+
+    setCurrentQuestionIndex((questionIndex) => questionIndex + 1);
+    setSelectedAnswer(null);
   }
 
   return (
@@ -113,13 +183,13 @@ export function QuestionFlow() {
 
           <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-bold text-slate-500">
-              {bloodTypeQuestion.label}
+              質問 {currentQuestionIndex + 1} / {questions.length}
             </p>
             <h2 className="mt-2 text-xl font-bold text-slate-900">
-              {bloodTypeQuestion.text}
+              {currentQuestion.text}
             </h2>
             <div className="mt-5 grid gap-3">
-              {bloodTypeQuestion.options.map((option) => {
+              {currentQuestion.options.map((option) => {
                 const isSelected = selectedAnswer === option.id;
 
                 return (
@@ -149,7 +219,7 @@ export function QuestionFlow() {
               onClick={handleNext}
               className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
             >
-              次へ
+              {isLastQuestion ? "結果を見る" : "次へ"}
             </button>
             <Link
               to={paths.players}

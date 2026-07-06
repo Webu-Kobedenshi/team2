@@ -118,7 +118,7 @@ export function QuestionFlow() {
             <h2 className="mt-2 text-xl font-bold text-slate-900">
               {bloodTypeQuestion.text}
             </h2>
-            <div className="mt-5 grid grid-cols-2 gap-3">
+            <div className="mt-5 grid gap-3">
               {bloodTypeQuestion.options.map((option) => {
                 const isSelected = selectedAnswer === option.id;
 

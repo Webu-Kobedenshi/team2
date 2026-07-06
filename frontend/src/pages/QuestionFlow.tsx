@@ -91,6 +91,7 @@ export function QuestionFlow() {
   const playerCount = Number(searchParams.get("players"));
   const gameSession = loadGameSession();
   const [screen, setScreen] = useState<QuestionScreen>("intro");
+  const [currentPlayerOrderIndex, setCurrentPlayerOrderIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
@@ -99,10 +100,17 @@ export function QuestionFlow() {
   }
 
   const activeGameSession = gameSession;
-  const currentPlayerIndex = activeGameSession.playerOrder[0];
+  const currentPlayerIndex =
+    activeGameSession.playerOrder[currentPlayerOrderIndex];
   const currentPlayerLabel = playerLabels[currentPlayerIndex];
+  const previousPlayerIndex =
+    activeGameSession.playerOrder[currentPlayerOrderIndex - 1];
+  const previousPlayerLabel = playerLabels[previousPlayerIndex];
+  const hasPreviousPlayer = currentPlayerOrderIndex > 0;
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
+  const isLastPlayer =
+    currentPlayerOrderIndex === activeGameSession.playerOrder.length - 1;
 
   function handleNext() {
     if (!selectedAnswer) {
@@ -118,8 +126,16 @@ export function QuestionFlow() {
 
     saveGameSession(nextSession);
 
-    if (isLastQuestion) {
+    if (isLastQuestion && isLastPlayer) {
       navigate(paths.result);
+      return;
+    }
+
+    if (isLastQuestion) {
+      setCurrentPlayerOrderIndex((playerOrderIndex) => playerOrderIndex + 1);
+      setCurrentQuestionIndex(0);
+      setSelectedAnswer(null);
+      setScreen("intro");
       return;
     }
 
@@ -145,6 +161,11 @@ export function QuestionFlow() {
             <p className="text-sm font-bold text-blue-600">
               {playerCount}人で遊びます
             </p>
+            {hasPreviousPlayer && (
+              <p className="mt-2 text-sm font-bold text-blue-700">
+                {previousPlayerLabel}さんの回答は終了しました
+              </p>
+            )}
             <p className="mt-2 text-xl font-black text-slate-900">
               {currentPlayerLabel}さんに渡してください
             </p>
@@ -219,7 +240,11 @@ export function QuestionFlow() {
               onClick={handleNext}
               className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
             >
-              {isLastQuestion ? "結果を見る" : "次へ"}
+              {isLastQuestion && isLastPlayer
+                ? "結果を見る"
+                : isLastQuestion
+                  ? "次の人に渡す"
+                  : "次へ"}
             </button>
             <Link
               to={paths.players}

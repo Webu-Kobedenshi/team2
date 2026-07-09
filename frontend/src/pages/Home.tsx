@@ -53,7 +53,7 @@ export function Home() {
               {index < howToSteps.length - 1 && (
                 <div
                   aria-hidden="true"
-                  className="absolute left-[30px] top-[24px] bottom-[-28px] z-10 w-0.5 border-l border-solid border-slate-200"
+                  className="absolute left-7.5 top-6 -bottom-7 z-10 w-0.5 border-l border-solid border-slate-200"
                 />
               )}
               <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-sm font-black text-sky-700">

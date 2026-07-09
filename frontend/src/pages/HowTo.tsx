@@ -8,7 +8,7 @@ export function HowTo() {
     <MobilePageShell>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <p className="text-sm font-bold text-blue-600">GUIDE</p>
+          <p className="text-sm font-bold text-sky-500">GUIDE</p>
           <h1 className="text-3xl font-black tracking-tight text-slate-950">
             遊び方
           </h1>

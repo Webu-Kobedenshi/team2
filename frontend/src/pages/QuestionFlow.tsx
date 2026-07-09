@@ -18,7 +18,7 @@ export function QuestionFlow() {
     <MobilePageShell>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <p className="text-sm font-bold text-blue-600">STEP 2</p>
+          <p className="text-sm font-bold text-sky-500">STEP 2</p>
           <h1 className="text-3xl font-black tracking-tight text-slate-950">
             質問に答える
           </h1>
@@ -27,8 +27,8 @@ export function QuestionFlow() {
           </p>
         </div>
 
-        <div className="rounded-3xl border border-blue-100 bg-blue-50 p-5">
-          <p className="text-sm font-bold text-blue-600">
+        <div className="rounded-3xl border border-sky-100 bg-sky-50 p-5">
+          <p className="text-sm font-bold text-sky-600">
             {playerCount}人で遊びます
           </p>
           <p className="mt-2 text-xl font-black text-slate-900">

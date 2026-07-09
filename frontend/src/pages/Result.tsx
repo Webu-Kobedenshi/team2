@@ -15,7 +15,7 @@ export function Result() {
     <MobilePageShell>
       <div className="grid gap-6">
         <div className="grid gap-2">
-          <p className="text-sm font-bold text-blue-600">STEP 3</p>
+          <p className="text-sm font-bold text-sky-500">STEP 3</p>
           <h1 className="text-3xl font-black tracking-tight text-slate-950">
             結果を見る
           </h1>

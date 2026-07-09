@@ -12,7 +12,7 @@ export type Question = {
 export const questions: Question[] = [
   {
     id: "bloodType",
-    text: "あなたの血液型を選んでください",
+    text: "あなたの血液型は？",
     options: [
       { id: "a", label: "A" },
       { id: "b", label: "B" },

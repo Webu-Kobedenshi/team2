@@ -12,7 +12,6 @@ import { questions } from "../features/questions";
 import { paths } from "../routes";
 
 const validPlayerCounts = [2, 3, 4];
-const playerLabels = ["A", "B", "C", "D"];
 type QuestionScreen = "intro" | "question";
 
 export function QuestionFlow() {
@@ -32,10 +31,6 @@ export function QuestionFlow() {
   const activeGameSession = gameSession;
   const currentPlayerIndex =
     activeGameSession.playerOrder[currentPlayerOrderIndex];
-  const currentPlayerLabel = playerLabels[currentPlayerIndex];
-  const previousPlayerIndex =
-    activeGameSession.playerOrder[currentPlayerOrderIndex - 1];
-  const previousPlayerLabel = playerLabels[previousPlayerIndex];
   const hasPreviousPlayer = currentPlayerOrderIndex > 0;
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
@@ -80,38 +75,45 @@ export function QuestionFlow() {
           <div className="grid gap-2">
             <p className="text-sm font-bold text-blue-600">STEP 2</p>
             <h1 className="text-3xl font-black tracking-tight text-slate-950">
-              回答者に渡す
+              {hasPreviousPlayer ? "次の人にまわそう" : "質問に答えよう"}
             </h1>
             <p className="leading-7 text-slate-600">
-              端末を渡してから回答を始めてください。
+              {hasPreviousPlayer
+                ? "スマホはこの画面のまま、次の人に渡してね！"
+                : "準備ができたら、回答をはじめよう！"}
             </p>
           </div>
 
-          <div className="rounded-3xl border border-blue-100 bg-blue-50 p-5">
-            <p className="text-sm font-bold text-blue-600">
-              {playerCount}人で遊びます
+          <div className="flex justify-end">
+            <p className="min-w-20 rounded-full bg-blue-100 px-5 py-2 text-center text-lg font-black text-blue-700">
+              {currentPlayerOrderIndex + 1}/{playerCount}
             </p>
-            {hasPreviousPlayer && (
-              <p className="mt-2 text-sm font-bold text-blue-700">
-                {previousPlayerLabel}さんの回答は終了しました
+          </div>
+
+          <div className="grid gap-8">
+            <div className="rounded-3xl border border-blue-100 bg-blue-50 p-5">
+              <p className="text-xl font-black text-slate-900">
+                {hasPreviousPlayer
+                  ? "次の人にスマホを渡そう"
+                  : "最初の人からスタート"}
               </p>
-            )}
-            <p className="mt-2 text-xl font-black text-slate-900">
-              {currentPlayerLabel}さんに渡してください
-            </p>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
-              あなたは{currentPlayerLabel}です。回答を始めてください。
-            </p>
-          </div>
+              <p className="mt-2 text-sm font-bold leading-6 text-slate-700">
+                {hasPreviousPlayer
+                  ? "受け取った人が、このボタンを押してね！"
+                  : "自分に近い答えを選ぼう"}
+              </p>
+            </div>
 
-          <div className="grid gap-3">
             <button
               type="button"
               onClick={() => setScreen("question")}
               className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
             >
-              回答を始める
+              回答する
             </button>
+          </div>
+
+          <div className="grid gap-3">
             <Link
               to={paths.players}
               className="text-center text-sm font-bold text-slate-500 transition hover:text-slate-700"
@@ -125,10 +127,10 @@ export function QuestionFlow() {
           <div className="grid gap-2">
             <p className="text-sm font-bold text-blue-600">STEP 2</p>
             <h1 className="text-3xl font-black tracking-tight text-slate-950">
-              質問に答える
+              質問に答えよう
             </h1>
             <p className="leading-7 text-slate-600">
-              選択肢を選んでから次へ進んでください。
+              思い当たる答えを一つだけ選んでね！
             </p>
           </div>
 
@@ -150,7 +152,7 @@ export function QuestionFlow() {
               {isLastQuestion && isLastPlayer
                 ? "結果を見る"
                 : isLastQuestion
-                  ? "次の人に渡す"
+                  ? "次の人へ"
                   : "次へ"}
             </button>
             <Link

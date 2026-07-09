@@ -21,7 +21,6 @@ export function PlayerSelect() {
     navigate(`${paths.questions}?players=${selectedCount}`);
   };
 
-  
   return (
     <MobilePageShell>
       <div className="grid gap-6">

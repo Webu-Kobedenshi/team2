@@ -7,15 +7,15 @@ import { paths } from "../routes";
 const howToSteps = [
   {
     title: "人数を選ぶ",
-    desc: "2〜4人の中から、一緒に遊ぶ人数を選びます。",
+    desc: "2〜4人の中から、一緒に遊ぶ人数を選ぼう",
   },
   {
-    title: "一人ずつ質問に答える",
-    desc: "1台のスマホを順番に回して回答します。",
+    title: "質問に答える",
+    desc: "みんなで順番に質問に答えよう",
   },
   {
     title: "結果を見て話す",
-    desc: "みんなの共通点や、盛り上がる話題が表示されます。",
+    desc: "みんなの共通点や、盛り上がる話題が表示されるよ",
   },
 ];
 
@@ -34,7 +34,7 @@ export function Home() {
             ファインダー
           </h1>
           <p className="text-base leading-8 text-slate-700">
-            簡単な質問から、みんなで盛り上がれる話題を見つけます。
+            簡単な質問から、みんなで盛り上がれる話題を見つけます！
           </p>
         </div>
       </div>
@@ -75,7 +75,7 @@ export function Home() {
             to={paths.howTo}
             className="flex items-center gap-1 text-sm font-bold text-sky-500 transition hover:text-sky-600 active:scale-[0.98]"
           >
-            <span>詳しい遊び方を画像で見る</span>
+            <span>詳しい遊び方を見る</span>
             <ArrowRight aria-hidden="true" className="h-4 w-4" />
           </Link>
         </div>

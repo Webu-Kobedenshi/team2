@@ -28,17 +28,7 @@ export const DEFAULT_QUESTION_IDS = [
 const GAME_SESSION_STORAGE_KEY = "commonFinderGame";
 
 function createPlayerOrder(playerCount: number): number[] {
-  const playerOrder = Array.from({ length: playerCount }, (_, index) => index);
-
-  for (let index = playerOrder.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [playerOrder[index], playerOrder[randomIndex]] = [
-      playerOrder[randomIndex],
-      playerOrder[index],
-    ];
-  }
-
-  return playerOrder;
+  return Array.from({ length: playerCount }, (_, index) => index);
 }
 
 function createEmptyAnswerRecord(

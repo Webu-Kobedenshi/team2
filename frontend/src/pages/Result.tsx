@@ -8,8 +8,8 @@ import { paths } from "../routes";
 // ==================== 型定義 ====================
 interface CommonPoint {
   withPlayerId: string; // 相手のプレイヤーID
-  count: number;        // 共通点の個数
-  items: string[];      // 共通点の内容（例：["インドア", "友情"]）
+  count: number; // 共通点の個数
+  items: string[]; // 共通点の内容（例：["インドア", "友情"]）
 }
 
 interface ProcessedPlayer {
@@ -21,7 +21,7 @@ interface ProcessedPlayer {
 
 export function Result() {
   const gameSession = loadGameSession();
-  
+
   // showResult = false: 中間画面 (2秒間表示)
   // showResult = true: 結果画面 (2秒後に自動切り替え)
   const [showResult, setShowResult] = useState(false);
@@ -47,14 +47,16 @@ export function Result() {
     const colors = ["#38bdf8", "#f43f5e", "#10b981", "#f59e0b"];
 
     // 1. 各プレイヤーの情報を整理
-    const players: ProcessedPlayer[] = gameSession.answers.map((ans: any, index: number) => {
-      return {
-        id: `p_${index}`,
-        name: ans.playerName || `プレイヤー ${index + 1}`,
-        avatarColor: colors[index % colors.length],
-        commonPoints: [] // 後で計算して入れます
-      };
-    });
+    const players: ProcessedPlayer[] = gameSession.answers.map(
+      (ans: any, index: number) => {
+        return {
+          id: `p_${index}`,
+          name: ans.playerName || `プレイヤー ${index + 1}`,
+          avatarColor: colors[index % colors.length],
+          commonPoints: [], // 後で計算して入れます
+        };
+      },
+    );
 
     // 2. 総当たりでプレイヤー同士の回答を比較
     players.forEach((currentPlayer, currentIndex) => {
@@ -68,7 +70,10 @@ export function Result() {
 
         // q1〜q10 のキーをループして、回答が一致しているかチェック
         Object.keys(currentRawAnswer).forEach((key) => {
-          if (currentRawAnswer[key] && currentRawAnswer[key] === otherRawAnswer[key]) {
+          if (
+            currentRawAnswer[key] &&
+            currentRawAnswer[key] === otherRawAnswer[key]
+          ) {
             // 一致していたら、その回答内容（例：「インドア」や「A型」）を共通点リストに追加
             commonItems.push(currentRawAnswer[key]);
           }
@@ -78,7 +83,7 @@ export function Result() {
         currentPlayer.commonPoints.push({
           withPlayerId: otherPlayer.id,
           count: commonItems.length,
-          items: commonItems
+          items: commonItems,
         });
       });
     });
@@ -87,11 +92,14 @@ export function Result() {
     const summaryMap = new Map();
     players.forEach((player) => {
       // 全員との共通点の合計数
-      const totalConnections = player.commonPoints.reduce((sum, cp) => sum + cp.count, 0);
-      
+      const totalConnections = player.commonPoints.reduce(
+        (sum, cp) => sum + cp.count,
+        0,
+      );
+
       let maxCount = -1;
       let mostConnectedId = "";
-      
+
       player.commonPoints.forEach((cp) => {
         if (cp.count > maxCount) {
           maxCount = cp.count;
@@ -103,7 +111,8 @@ export function Result() {
 
       summaryMap.set(player.id, {
         totalConnections,
-        mostConnectedName: bestPartner && maxCount > 0 ? bestPartner.name : "なし",
+        mostConnectedName:
+          bestPartner && maxCount > 0 ? bestPartner.name : "なし",
       });
     });
 
@@ -121,17 +130,20 @@ export function Result() {
     return <Navigate to={paths.players} replace />;
   }
 
-  const selectedPlayer = processedPlayers.find((p) => p.id === selectedPlayerId);
+  const selectedPlayer = processedPlayers.find(
+    (p) => p.id === selectedPlayerId,
+  );
 
   return (
     <MobilePageShell>
       <div className="grid gap-6">
-        
         {/* 【1. 中間画面】 */}
         {!showResult && (
           <div className="grid gap-8 py-12 text-center">
             <div className="text-left">
-              <p className="text-xs font-bold tracking-wider text-sky-500">FINAL STEP 2</p>
+              <p className="text-xs font-bold tracking-wider text-sky-500">
+                FINAL STEP 2
+              </p>
               <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
                 回答が集まりました！
               </h1>
@@ -142,7 +154,9 @@ export function Result() {
 
             <div className="flex flex-col items-center justify-center my-6">
               <div className="relative flex h-44 w-44 animate-pulse items-center justify-center rounded-full border-4 border-dashed border-sky-200 bg-sky-50">
-                <span className="text-xl font-black tracking-widest text-sky-500">CONFIRM</span>
+                <span className="text-xl font-black tracking-widest text-sky-500">
+                  CONFIRM
+                </span>
               </div>
               <p className="mt-4 text-xs tracking-wider text-slate-400">
                 {gameSession.answers.length}人分の回答データを分析中...
@@ -155,7 +169,9 @@ export function Result() {
         {showResult && (
           <div className="grid gap-6">
             <div className="text-left">
-              <p className="text-xs font-bold tracking-wider text-sky-500">MATCHING RESULT</p>
+              <p className="text-xs font-bold tracking-wider text-sky-500">
+                MATCHING RESULT
+              </p>
               <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
                 分析結果
               </h1>
@@ -186,15 +202,24 @@ export function Result() {
                         style={{ backgroundColor: player.avatarColor }}
                       />
                       <div>
-                        <p className="font-bold text-slate-900">{player.name}</p>
+                        <p className="font-bold text-slate-900">
+                          {player.name}
+                        </p>
                         <p className="text-xs text-slate-400 mt-0.5">
-                          相性抜群: <span className="font-medium text-slate-700">{analysis?.mostConnectedName}</span>
+                          相性抜群:{" "}
+                          <span className="font-medium text-slate-700">
+                            {analysis?.mostConnectedName}
+                          </span>
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="block text-[10px] font-bold text-slate-400 uppercase">総共通点</span>
-                      <span className="text-lg font-black text-sky-500">{analysis?.totalConnections} 個</span>
+                      <span className="block text-[10px] font-bold text-slate-400 uppercase">
+                        総共通点
+                      </span>
+                      <span className="text-lg font-black text-sky-500">
+                        {analysis?.totalConnections} 個
+                      </span>
                     </div>
                   </button>
                 );
@@ -207,31 +232,47 @@ export function Result() {
             {selectedPlayer && (
               <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-sm grid gap-4">
                 <div className="flex items-center gap-2">
-                  <div className="h-5 w-1.5 rounded-full" style={{ backgroundColor: selectedPlayer.avatarColor }} />
-                  <h3 className="font-bold text-slate-900">{selectedPlayer.name} のつながり詳細</h3>
+                  <div
+                    className="h-5 w-1.5 rounded-full"
+                    style={{ backgroundColor: selectedPlayer.avatarColor }}
+                  />
+                  <h3 className="font-bold text-slate-900">
+                    {selectedPlayer.name} のつながり詳細
+                  </h3>
                 </div>
 
                 <div className="grid gap-3">
                   {selectedPlayer.commonPoints.map((cp) => {
-                    const partner = processedPlayers.find((p) => p.id === cp.withPlayerId);
+                    const partner = processedPlayers.find(
+                      (p) => p.id === cp.withPlayerId,
+                    );
                     const analysis = analysisMap.get(selectedPlayer.id);
                     // 共通点があり、かつ最高カウントの相手ならBESTマークを出す
-                    const isBestPartner = partner?.name === analysis?.mostConnectedName && cp.count > 0;
+                    const isBestPartner =
+                      partner?.name === analysis?.mostConnectedName &&
+                      cp.count > 0;
 
                     return (
-                      <div key={cp.withPlayerId} className="rounded-2xl border border-slate-50 bg-slate-50 p-4">
+                      <div
+                        key={cp.withPlayerId}
+                        className="rounded-2xl border border-slate-50 bg-slate-50 p-4"
+                      >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-slate-700">vs {partner?.name}</span>
+                            <span className="text-sm font-bold text-slate-700">
+                              vs {partner?.name}
+                            </span>
                             {isBestPartner && (
                               <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">
                                 BEST!
                               </span>
                             )}
                           </div>
-                          <span className="text-xs font-black text-sky-500">共通点: {cp.count}個</span>
+                          <span className="text-xs font-black text-sky-500">
+                            共通点: {cp.count}個
+                          </span>
                         </div>
-                        
+
                         {/* 共通点のハッシュタグ風チップス */}
                         <div className="flex flex-wrap gap-1.5">
                           {cp.count > 0 ? (
@@ -244,7 +285,9 @@ export function Result() {
                               </span>
                             ))
                           ) : (
-                            <span className="text-xs text-slate-400 italic">共通点はまだありません</span>
+                            <span className="text-xs text-slate-400 italic">
+                              共通点はまだありません
+                            </span>
                           )}
                         </div>
                       </div>
@@ -273,7 +316,6 @@ export function Result() {
             </div>
           </div>
         )}
-
       </div>
     </MobilePageShell>
   );

@@ -31,7 +31,7 @@ export function Result() {
             人分の回答をもとに、共通点を表示します。
           </p>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            現在保存されている回答数: {gameSession.answers.length}人分
+            参加人数: {gameSession.playerCount}人
           </p>
         </div>
 

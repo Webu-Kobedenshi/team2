@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { MobilePageShell } from "../components/MobilePageShell";
 import { QuestionCard } from "../components/QuestionCard";
@@ -11,20 +11,17 @@ import {
 import { questions } from "../features/questions";
 import { paths } from "../routes";
 
-const validPlayerCounts = [2, 3, 4];
 type QuestionScreen = "intro" | "question";
 
 export function QuestionFlow() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const playerCount = Number(searchParams.get("players"));
   const gameSession = loadGameSession();
   const [screen, setScreen] = useState<QuestionScreen>("intro");
   const [currentPlayerOrderIndex, setCurrentPlayerOrderIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
-  if (!validPlayerCounts.includes(playerCount) || !gameSession) {
+  if (!gameSession) {
     return <Navigate to={paths.players} replace />;
   }
 
@@ -86,7 +83,7 @@ export function QuestionFlow() {
 
           <div className="flex justify-end">
             <p className="min-w-20 rounded-full bg-blue-100 px-5 py-2 text-center text-lg font-black text-blue-700">
-              {currentPlayerOrderIndex + 1}/{playerCount}
+              {currentPlayerOrderIndex + 1}/{activeGameSession.playerCount}
             </p>
           </div>
 

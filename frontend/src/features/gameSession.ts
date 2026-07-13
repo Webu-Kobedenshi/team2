@@ -26,6 +26,78 @@ export const DEFAULT_QUESTION_IDS = [
 ] as const satisfies readonly QuestionId[];
 
 const GAME_SESSION_STORAGE_KEY = "commonFinderGame";
+const validPlayerCounts = [2, 3, 4];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isGameSession(value: unknown): value is GameSession {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  const { playerCount, playerOrder, questionIds, answers } = value;
+
+  if (
+    typeof playerCount !== "number" ||
+    !validPlayerCounts.includes(playerCount) ||
+    !Array.isArray(playerOrder) ||
+    playerOrder.length !== playerCount ||
+    !Array.isArray(questionIds) ||
+    questionIds.length === 0 ||
+    !questionIds.every((questionId) => typeof questionId === "string") ||
+    new Set(questionIds).size !== questionIds.length ||
+    !Array.isArray(answers) ||
+    answers.length !== playerCount
+  ) {
+    return false;
+  }
+
+  const expectedPlayerIndexes = new Set(
+    Array.from({ length: playerCount }, (_, index) => index),
+  );
+
+  if (
+    !playerOrder.every(
+      (playerIndex) =>
+        typeof playerIndex === "number" &&
+        expectedPlayerIndexes.has(playerIndex),
+    ) ||
+    new Set(playerOrder).size !== playerCount
+  ) {
+    return false;
+  }
+
+  const answerPlayerIndexes = new Set<number>();
+
+  return answers.every((playerAnswer) => {
+    if (!isRecord(playerAnswer)) {
+      return false;
+    }
+
+    const { playerIndex, answers: playerAnswers } = playerAnswer;
+
+    if (!isRecord(playerAnswers)) {
+      return false;
+    }
+
+    if (
+      typeof playerIndex !== "number" ||
+      !expectedPlayerIndexes.has(playerIndex) ||
+      answerPlayerIndexes.has(playerIndex)
+    ) {
+      return false;
+    }
+
+    answerPlayerIndexes.add(playerIndex);
+
+    return questionIds.every((questionId) => {
+      const answer = playerAnswers[questionId];
+      return answer === null || typeof answer === "string";
+    });
+  });
+}
 
 function createPlayerOrder(playerCount: number): number[] {
   return Array.from({ length: playerCount }, (_, index) => index);
@@ -69,7 +141,8 @@ export function loadGameSession(): GameSession | null {
   }
 
   try {
-    return JSON.parse(raw) as GameSession;
+    const session = JSON.parse(raw) as unknown;
+    return isGameSession(session) ? session : null;
   } catch {
     return null;
   }

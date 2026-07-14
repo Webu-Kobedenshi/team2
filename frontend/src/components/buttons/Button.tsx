@@ -13,6 +13,9 @@ const variantClassNames: Record<ButtonVariant, string> = {
     "bg-sky-400 text-white shadow-md shadow-sky-400/10 hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/20 focus-visible:outline-sky-200",
 };
 
+const disabledClassName =
+  "cursor-not-allowed bg-slate-200 text-slate-400 shadow-none active:translate-y-0 active:scale-100";
+
 export function Button({
   block = true,
   children,
@@ -28,11 +31,7 @@ export function Button({
       disabled={disabled}
       className={`rounded-2xl px-6 py-4 text-center text-base font-black transition-all duration-200 focus-visible:outline-3 focus-visible:outline-offset-2 active:translate-y-0.5 active:scale-[0.98] ${
         block ? "w-full" : ""
-      } ${variantClassNames[variant]} ${
-        disabled
-          ? "cursor-not-allowed bg-slate-200 text-slate-400 shadow-none hover:bg-slate-200 hover:shadow-none active:translate-y-0 active:scale-100"
-          : ""
-      } ${className}`}
+      } ${disabled ? disabledClassName : variantClassNames[variant]} ${className}`}
       {...props}
     >
       {children}

@@ -6,10 +6,12 @@ import { Home } from "./pages/Home";
 import { PlayerSelect } from "./pages/PlayerSelect";
 import { QuestionFlow } from "./pages/QuestionFlow";
 import { Result } from "./pages/Result";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path={paths.home} element={<Home />} />
         <Route path={paths.players} element={<PlayerSelect />} />

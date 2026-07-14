@@ -32,10 +32,10 @@ export function QuestionCard({
               aria-pressed={isSelected}
               onClick={() => onSelectAnswer(option.id)}
               className={[
-                "min-h-16 rounded-2xl border px-4 py-4 text-center text-lg font-black transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-blue-200",
+                "min-h-16 rounded-2xl border px-4 py-4 text-center text-lg font-black transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200",
                 isSelected
-                  ? "border-blue-400 bg-blue-500 text-white shadow-md shadow-blue-500/20"
-                  : "border-slate-200 bg-white text-slate-900 hover:border-blue-200 hover:bg-blue-50",
+                  ? "border-sky-400 bg-sky-400 text-white shadow-md shadow-sky-400/20"
+                  : "border-slate-200 bg-white text-slate-900 hover:border-sky-200 hover:bg-sky-50",
               ].join(" ")}
             >
               {option.label}

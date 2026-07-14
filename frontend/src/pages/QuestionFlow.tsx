@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
+import { Button } from "../components/buttons";
+import { TextLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
+import { PageHeader } from "../components/PageHeader";
 import { QuestionCard } from "../components/QuestionCard";
 import {
   loadGameSession,
@@ -69,26 +72,24 @@ export function QuestionFlow() {
     <MobilePageShell>
       {screen === "intro" ? (
         <div className="grid gap-6">
-          <div className="grid gap-2">
-            <p className="text-sm font-bold text-blue-600">STEP 2</p>
-            <h1 className="text-3xl font-black tracking-tight text-slate-950">
-              {hasPreviousPlayer ? "次の人にまわそう" : "質問に答えよう"}
-            </h1>
-            <p className="leading-7 text-slate-600">
-              {hasPreviousPlayer
+          <PageHeader
+            label="STEP 2"
+            title={hasPreviousPlayer ? "次の人にまわそう" : "質問に答えよう"}
+            description={
+              hasPreviousPlayer
                 ? "スマホはこの画面のまま、次の人に渡してね！"
-                : "準備ができたら、回答をはじめよう！"}
-            </p>
-          </div>
+                : "準備ができたら、回答をはじめよう！"
+            }
+          />
 
           <div className="flex justify-end">
-            <p className="min-w-20 rounded-full bg-blue-100 px-5 py-2 text-center text-lg font-black text-blue-700">
+            <p className="min-w-20 rounded-full bg-sky-100 px-5 py-2 text-center text-lg font-black text-sky-700">
               {currentPlayerOrderIndex + 1}/{activeGameSession.playerCount}
             </p>
           </div>
 
           <div className="grid gap-8">
-            <div className="rounded-3xl border border-blue-100 bg-blue-50 p-5">
+            <div className="rounded-3xl border border-sky-100 bg-sky-50 p-5">
               <p className="text-xl font-black text-slate-900">
                 {hasPreviousPlayer
                   ? "次の人にスマホを渡そう"
@@ -101,35 +102,18 @@ export function QuestionFlow() {
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setScreen("question")}
-              className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
-            >
-              回答する
-            </button>
+            <Button onClick={() => setScreen("question")}>回答する</Button>
           </div>
 
-          <div className="grid gap-3">
-            <Link
-              to={paths.players}
-              className="text-center text-sm font-bold text-slate-500 transition hover:text-slate-700"
-            >
-              人数選択へ戻る
-            </Link>
-          </div>
+          <TextLink to={paths.players}>人数選択へ戻る</TextLink>
         </div>
       ) : (
         <div className="grid gap-6">
-          <div className="grid gap-2">
-            <p className="text-sm font-bold text-blue-600">STEP 2</p>
-            <h1 className="text-3xl font-black tracking-tight text-slate-950">
-              質問に答えよう
-            </h1>
-            <p className="leading-7 text-slate-600">
-              思い当たる答えを一つだけ選んでね！
-            </p>
-          </div>
+          <PageHeader
+            label="STEP 2"
+            title="質問に答えよう"
+            description="思い当たる答えを一つだけ選んでね！"
+          />
 
           <QuestionCard
             question={currentQuestion}
@@ -140,24 +124,14 @@ export function QuestionFlow() {
           />
 
           <div className="grid gap-3">
-            <button
-              type="button"
-              disabled={!selectedAnswer}
-              onClick={handleNext}
-              className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
-            >
+            <Button disabled={!selectedAnswer} onClick={handleNext}>
               {isLastQuestion && isLastPlayer
                 ? "結果を見る"
                 : isLastQuestion
                   ? "次の人へ"
                   : "次へ"}
-            </button>
-            <Link
-              to={paths.players}
-              className="text-center text-sm font-bold text-slate-500 transition hover:text-slate-700"
-            >
-              人数選択へ戻る
-            </Link>
+            </Button>
+            <TextLink to={paths.players}>人数選択へ戻る</TextLink>
           </div>
         </div>
       )}

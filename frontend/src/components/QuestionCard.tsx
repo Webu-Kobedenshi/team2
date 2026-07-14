@@ -21,8 +21,10 @@ export function QuestionCard({
       <p className="text-sm font-bold text-slate-500">
         質問 {questionNumber} / {questionCount}
       </p>
-      <h2 className="mt-2 text-xl font-bold text-slate-900">{question.text}</h2>
-      <div className="mt-5 grid gap-3">
+      <h2 className="mt-2 min-h-14 text-xl font-bold text-slate-900">
+        {question.text}
+      </h2>
+      <div className="mt-5 flex min-h-[19.25rem] flex-col justify-center gap-3">
         {question.options.map((option) => {
           const isSelected = selectedAnswer === option.id;
 

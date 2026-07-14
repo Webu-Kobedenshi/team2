@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, UsersRound } from "lucide-react";
 
+import { ButtonLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
 import { paths } from "../routes";
 
@@ -48,14 +49,8 @@ export function Home() {
           {howToSteps.map((step, index) => (
             <li
               key={step.title}
-              className="relative flex items-center gap-3 rounded-2xl bg-white px-3.5 py-3"
+              className="relative flex min-h-24 items-center gap-3 rounded-2xl bg-white px-3.5 py-3"
             >
-              {index < howToSteps.length - 1 && (
-                <div
-                  aria-hidden="true"
-                  className="absolute left-7.5 top-6 -bottom-7 z-10 w-0.5 border-l border-solid border-slate-200"
-                />
-              )}
               <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-sm font-black text-sky-700">
                 {index + 1}
               </span>
@@ -82,12 +77,7 @@ export function Home() {
       </div>
 
       <div className="grid gap-3">
-        <Link
-          to={paths.players}
-          className="w-full rounded-2xl bg-sky-400 px-6 py-4 text-center text-base font-black text-white shadow-md shadow-sky-400/10 transition-all duration-200 hover:bg-sky-500 hover:shadow-lg hover:shadow-sky-500/20 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200 active:translate-y-0.5 active:scale-[0.98]"
-        >
-          はじめる
-        </Link>
+        <ButtonLink to={paths.players}>はじめる</ButtonLink>
       </div>
     </MobilePageShell>
   );

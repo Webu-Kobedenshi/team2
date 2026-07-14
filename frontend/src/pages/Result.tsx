@@ -1,7 +1,9 @@
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 
+import { ButtonLink, TextLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
+import { PageHeader } from "../components/PageHeader";
 import { clearGameSession, loadGameSession } from "../features/gameSession";
 import { paths } from "../routes";
 
@@ -132,17 +134,11 @@ export function Result() {
         {/* 【1. 中間画面】 */}
         {!showResult && (
           <div className="grid gap-8 py-12 text-center">
-            <div className="text-left">
-              <p className="text-xs font-bold tracking-wider text-sky-500">
-                FINAL STEP 2
-              </p>
-              <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
-                回答が集まりました！
-              </h1>
-              <p className="mt-2 text-base text-slate-600">
-                結果を表示します。
-              </p>
-            </div>
+            <PageHeader
+              label="FINAL STEP 2"
+              title="回答が集まりました！"
+              description="結果を表示します。"
+            />
 
             <div className="flex flex-col items-center justify-center my-6">
               <div className="relative flex h-44 w-44 animate-pulse items-center justify-center rounded-full border-4 border-dashed border-sky-200 bg-sky-50">
@@ -160,14 +156,11 @@ export function Result() {
         {/* 【2. 結果表示画面】 */}
         {showResult && (
           <div className="grid gap-6">
-            <div className="text-left">
-              <p className="text-xs font-bold tracking-wider text-sky-500">
-                MATCHING RESULT
-              </p>
-              <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950">
-                分析結果
-              </h1>
-            </div>
+            <PageHeader
+              label="MATCHING RESULT"
+              title="分析結果"
+              description="ここに共通点や、会話が盛り上がりそうな話題を表示します。"
+            />
 
             {/* プレイヤー一覧 */}
             <div className="grid gap-3">
@@ -291,20 +284,12 @@ export function Result() {
 
             {/* ナビゲーションボタン */}
             <div className="grid gap-3 mt-4">
-              <Link
-                to={paths.players}
-                onClick={clearGameSession}
-                className="rounded-2xl bg-sky-500 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-sky-600 shadow-md"
-              >
+              <ButtonLink to={paths.players} onClick={clearGameSession}>
                 もう一度遊ぶ
-              </Link>
-              <Link
-                to={paths.home}
-                onClick={clearGameSession}
-                className="text-center text-sm font-bold text-slate-500 transition hover:text-slate-700"
-              >
+              </ButtonLink>
+              <TextLink to={paths.home} onClick={clearGameSession}>
                 ホームへ戻る
-              </Link>
+              </TextLink>
             </div>
           </div>
         )}

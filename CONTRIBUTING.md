@@ -30,6 +30,10 @@ git switch -c feature/1-start-button
 
 `fix`: 不具合修正。
 
+`refactor`: 動作を変えないコード整理や共通化。
+
+`style`: 見た目、レイアウト、CSSなどの調整。機能追加や不具合修正を含まない変更。
+
 `docs`: README や説明文など、ドキュメントの変更。
 
 `chore`: 設定、依存関係、開発環境などの変更。`chore`は雑用という意味。
@@ -39,6 +43,8 @@ git switch -c feature/1-start-button
 ```text
 feat: ホーム画面の土台を追加する
 fix: 人数選択の表示崩れを修正する
+refactor: 共通UIコンポーネントを追加する
+style: モバイル画面の余白を調整する
 docs: READMEにセットアップ手順を追加する
 chore: TailwindとPrettierの設定を追加する
 ```

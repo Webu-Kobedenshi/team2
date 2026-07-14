@@ -1,4 +1,5 @@
 import type { Question } from "../features/questions";
+import { ChoiceButton } from "./buttons";
 
 type QuestionCardProps = {
   question: Question;
@@ -26,20 +27,13 @@ export function QuestionCard({
           const isSelected = selectedAnswer === option.id;
 
           return (
-            <button
+            <ChoiceButton
               key={option.id}
-              type="button"
-              aria-pressed={isSelected}
+              selected={isSelected}
               onClick={() => onSelectAnswer(option.id)}
-              className={[
-                "min-h-16 rounded-2xl border px-4 py-4 text-center text-lg font-black transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200",
-                isSelected
-                  ? "border-sky-400 bg-sky-400 text-white shadow-md shadow-sky-400/20"
-                  : "border-slate-200 bg-white text-slate-900 hover:border-sky-200 hover:bg-sky-50",
-              ].join(" ")}
             >
               {option.label}
-            </button>
+            </ChoiceButton>
           );
         })}
       </div>

@@ -1,6 +1,8 @@
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
+import { ButtonLink, TextLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
+import { PageHeader } from "../components/PageHeader";
 import { clearGameSession, loadGameSession } from "../features/gameSession";
 import { paths } from "../routes";
 
@@ -14,15 +16,11 @@ export function Result() {
   return (
     <MobilePageShell>
       <div className="grid gap-6">
-        <div className="grid gap-2">
-          <p className="text-sm font-bold text-sky-500">STEP 3</p>
-          <h1 className="text-3xl font-black tracking-tight text-slate-950">
-            結果を見る
-          </h1>
-          <p className="leading-7 text-slate-600">
-            ここに共通点や、会話が盛り上がりそうな話題を表示します。
-          </p>
-        </div>
+        <PageHeader
+          label="STEP 3"
+          title="結果を見る"
+          description="ここに共通点や、会話が盛り上がりそうな話題を表示します。"
+        />
 
         <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <p className="text-sm font-bold text-slate-500">仮の結果</p>
@@ -36,20 +34,12 @@ export function Result() {
         </div>
 
         <div className="grid gap-3">
-          <Link
-            to={paths.players}
-            onClick={clearGameSession}
-            className="rounded-2xl bg-slate-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-slate-800 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-slate-400"
-          >
+          <ButtonLink to={paths.players} onClick={clearGameSession}>
             もう一度遊ぶ
-          </Link>
-          <Link
-            to={paths.home}
-            onClick={clearGameSession}
-            className="text-center text-sm font-bold text-slate-500 transition hover:text-slate-700"
-          >
+          </ButtonLink>
+          <TextLink to={paths.home} onClick={clearGameSession}>
             ホームへ戻る
-          </Link>
+          </TextLink>
         </div>
       </div>
     </MobilePageShell>

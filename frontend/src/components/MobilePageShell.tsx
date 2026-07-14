@@ -14,7 +14,7 @@ const backgroundCircles = [
 
 export function MobilePageShell({ children, className }: MobilePageShellProps) {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-white px-5 py-8 text-slate-900 sm:px-8">
+    <main className="relative min-h-screen overflow-hidden bg-white px-5 pt-6 pb-16 text-slate-900 sm:px-8 sm:pb-20">
       {backgroundCircles.map((circle) => (
         <div
           key={circle}
@@ -24,7 +24,7 @@ export function MobilePageShell({ children, className }: MobilePageShellProps) {
       ))}
       <section
         className={[
-          "relative mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-md flex-col justify-center gap-8 sm:max-w-lg",
+          "relative mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-md flex-col justify-start gap-8 pt-5 sm:max-w-lg sm:pt-8",
           className,
         ]
           .filter(Boolean)

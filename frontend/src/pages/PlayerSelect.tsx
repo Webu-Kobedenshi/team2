@@ -18,7 +18,7 @@ export function PlayerSelect() {
     if (selectedCount === null) return;
 
     saveGameSession(createGameSession(selectedCount));
-    navigate(`${paths.questions}?players=${selectedCount}`);
+    navigate(paths.questions);
   };
 
   return (

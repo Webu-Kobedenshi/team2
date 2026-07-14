@@ -24,7 +24,7 @@ export function MobilePageShell({ children, className }: MobilePageShellProps) {
       ))}
       <section
         className={[
-          "relative mx-auto flex min-h-[calc(100vh-64px)] w-full max-w-md flex-col justify-start gap-8 pt-5 sm:max-w-lg sm:pt-8",
+          "relative mx-auto flex min-h-[calc(100vh-88px)] w-full max-w-md flex-col justify-start gap-8 pt-5 sm:max-w-lg sm:min-h-[calc(100vh-104px)] sm:pt-8",
           className,
         ]
           .filter(Boolean)

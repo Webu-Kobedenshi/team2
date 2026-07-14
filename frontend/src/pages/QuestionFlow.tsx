@@ -108,7 +108,7 @@ export function QuestionFlow() {
           <TextLink to={paths.players}>人数選択へ戻る</TextLink>
         </div>
       ) : (
-        <div className="grid gap-6">
+        <div className="flex flex-1 flex-col gap-6">
           <PageHeader
             label="STEP 2"
             title="質問に答えよう"
@@ -123,7 +123,7 @@ export function QuestionFlow() {
             onSelectAnswer={setSelectedAnswer}
           />
 
-          <div className="grid gap-3">
+          <div className="mt-auto grid gap-3">
             <Button disabled={!selectedAnswer} onClick={handleNext}>
               {isLastQuestion && isLastPlayer
                 ? "結果を見る"

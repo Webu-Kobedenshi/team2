@@ -1,4 +1,5 @@
 import type { Question } from "../features/questions";
+import { ChoiceButton } from "./buttons";
 
 type QuestionCardProps = {
   question: Question;
@@ -20,26 +21,21 @@ export function QuestionCard({
       <p className="text-sm font-bold text-slate-500">
         質問 {questionNumber} / {questionCount}
       </p>
-      <h2 className="mt-2 text-xl font-bold text-slate-900">{question.text}</h2>
-      <div className="mt-5 grid gap-3">
+      <h2 className="mt-2 min-h-14 text-xl font-bold text-slate-900">
+        {question.text}
+      </h2>
+      <div className="mt-5 flex min-h-[19.25rem] flex-col justify-center gap-3">
         {question.options.map((option) => {
           const isSelected = selectedAnswer === option.id;
 
           return (
-            <button
+            <ChoiceButton
               key={option.id}
-              type="button"
-              aria-pressed={isSelected}
+              selected={isSelected}
               onClick={() => onSelectAnswer(option.id)}
-              className={[
-                "min-h-16 rounded-2xl border px-4 py-4 text-center text-lg font-black transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200",
-                isSelected
-                  ? "border-sky-400 bg-sky-400 text-white shadow-md shadow-sky-400/20"
-                  : "border-slate-200 bg-white text-slate-900 hover:border-sky-200 hover:bg-sky-50",
-              ].join(" ")}
             >
               {option.label}
-            </button>
+            </ChoiceButton>
           );
         })}
       </div>

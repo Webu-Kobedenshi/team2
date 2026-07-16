@@ -6,6 +6,7 @@ import { TextLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
 import { PageHeader } from "../components/PageHeader";
 import { createGameSession, saveGameSession } from "../features/gameSession";
+import { clearResultViewSession } from "../features/resultViewSession";
 import { paths } from "../routes";
 
 const playerCounts = [2, 3, 4];
@@ -17,6 +18,7 @@ export function PlayerSelect() {
   const handleConfirm = () => {
     if (selectedCount === null) return;
 
+    clearResultViewSession();
     saveGameSession(createGameSession(selectedCount));
     navigate(paths.questions);
   };

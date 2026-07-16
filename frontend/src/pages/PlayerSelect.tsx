@@ -29,11 +29,11 @@ export function PlayerSelect() {
         <PageHeader
           label="STEP 1"
           title="遊ぶ人数を選ぶ"
-          description="一緒に遊ぶ人数を選んで、決定を押してください。"
+          description="一緒に遊ぶ人数を選んで、決定を押してね！"
         />
 
         <div className="mt-6">
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {playerCounts.map((count) => (
               <ChoiceButton
                 key={count}

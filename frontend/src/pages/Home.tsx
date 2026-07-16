@@ -52,8 +52,11 @@ export function Home() {
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-        <h2 className="flex items-center justify-center gap-2 text-lg font-bold text-slate-800">
-          <BookOpen aria-hidden="true" className="h-5 w-5 text-sky-500" />
+        <h2 className="relative mx-auto w-fit translate-x-1 text-center text-lg font-bold text-slate-800">
+          <BookOpen
+            aria-hidden="true"
+            className="absolute top-1/2 right-full mr-1 h-5 w-5 -translate-y-1/2 text-sky-500"
+          />
           遊び方
         </h2>
         <ol className="relative mt-5 grid gap-4">
@@ -62,7 +65,7 @@ export function Home() {
               key={step.title}
               className="relative flex min-h-24 items-center gap-3 rounded-2xl bg-white px-3.5 py-3"
             >
-              <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-sm font-black text-sky-700">
+              <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-base font-black text-sky-700">
                 {index + 1}
               </span>
               <div className="relative z-20 flex flex-col">

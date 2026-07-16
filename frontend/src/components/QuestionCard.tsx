@@ -1,4 +1,5 @@
 import type { Question } from "../features/questions";
+import { QuestionPanel } from "./QuestionPanel";
 import { ChoiceButton } from "./buttons";
 
 type QuestionCardProps = {
@@ -17,28 +18,25 @@ export function QuestionCard({
   onSelectAnswer,
 }: QuestionCardProps) {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-sm font-bold text-slate-500">
-        質問 {questionNumber} / {questionCount}
-      </p>
-      <h2 className="mt-2 min-h-14 text-xl font-bold text-slate-900">
-        {question.text}
-      </h2>
-      <div className="mt-5 flex min-h-[19.25rem] flex-col justify-center gap-3">
-        {question.options.map((option) => {
-          const isSelected = selectedAnswer === option.id;
+    <QuestionPanel
+      questionNumber={questionNumber}
+      questionCount={questionCount}
+      questionText={question.text}
+      contentClassName="gap-2.5"
+    >
+      {question.options.map((option) => {
+        const isSelected = selectedAnswer === option.id;
 
-          return (
-            <ChoiceButton
-              key={option.id}
-              selected={isSelected}
-              onClick={() => onSelectAnswer(option.id)}
-            >
-              {option.label}
-            </ChoiceButton>
-          );
-        })}
-      </div>
-    </div>
+        return (
+          <ChoiceButton
+            key={option.id}
+            selected={isSelected}
+            onClick={() => onSelectAnswer(option.id)}
+          >
+            {option.label}
+          </ChoiceButton>
+        );
+      })}
+    </QuestionPanel>
   );
 }

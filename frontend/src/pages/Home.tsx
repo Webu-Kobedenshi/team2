@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, BookOpen, UsersRound } from "lucide-react";
 
 import { ButtonLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
+import { createResultDebugSession } from "../features/debugGameSessions";
+import { saveGameSession, type GameSession } from "../features/gameSession";
+import { clearResultViewSession } from "../features/resultViewSession";
 import { paths } from "../routes";
 
 const howToSteps = [
@@ -21,6 +24,14 @@ const howToSteps = [
 ];
 
 export function Home() {
+  const navigate = useNavigate();
+
+  function openResultDebug(session: GameSession) {
+    clearResultViewSession();
+    saveGameSession(session);
+    navigate(paths.result);
+  }
+
   return (
     <MobilePageShell>
       <div className="grid gap-4">
@@ -41,8 +52,11 @@ export function Home() {
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
-        <h2 className="flex items-center justify-center gap-2 text-lg font-bold text-slate-800">
-          <BookOpen aria-hidden="true" className="h-5 w-5 text-sky-500" />
+        <h2 className="relative mx-auto w-fit translate-x-1 text-center text-lg font-bold text-slate-800">
+          <BookOpen
+            aria-hidden="true"
+            className="absolute top-1/2 right-full mr-1 h-5 w-5 -translate-y-1/2 text-sky-500"
+          />
           遊び方
         </h2>
         <ol className="relative mt-5 grid gap-4">
@@ -51,7 +65,7 @@ export function Home() {
               key={step.title}
               className="relative flex min-h-24 items-center gap-3 rounded-2xl bg-white px-3.5 py-3"
             >
-              <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-sm font-black text-sky-700">
+              <span className="relative z-20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-base font-black text-sky-700">
                 {index + 1}
               </span>
               <div className="relative z-20 flex flex-col">
@@ -78,6 +92,27 @@ export function Home() {
 
       <div className="grid gap-3">
         <ButtonLink to={paths.players}>はじめる</ButtonLink>
+
+        {import.meta.env.DEV && (
+          <div className="grid gap-3 rounded-2xl border border-dashed border-amber-300 bg-amber-50 p-4">
+            <div>
+              <p className="text-xs font-black tracking-wider text-amber-700">
+                開発用ショートカット
+              </p>
+              <p className="mt-1 text-xs leading-5 text-amber-800">
+                4人分の回答済みデータで各表示パターンを確認できます。
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => openResultDebug(createResultDebugSession())}
+              className="rounded-xl border border-amber-200 bg-white px-4 py-3 text-sm font-bold text-amber-900 transition hover:bg-amber-100 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-amber-200"
+            >
+              結果を確認
+            </button>
+          </div>
+        )}
       </div>
     </MobilePageShell>
   );

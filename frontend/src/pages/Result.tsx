@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
 
-import { ButtonLink, TextLink } from "../components/links";
+import { ButtonLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
 import { PageHeader } from "../components/PageHeader";
-import { clearGameSession, loadGameSession } from "../features/gameSession";
+import {
+  isGameSessionComplete,
+  loadGameSession,
+} from "../features/gameSession";
 import { paths } from "../routes";
 
 export function Result() {
@@ -13,34 +16,56 @@ export function Result() {
     return <Navigate to={paths.players} replace />;
   }
 
+  if (!isGameSessionComplete(gameSession)) {
+    return <Navigate to={paths.questions} replace />;
+  }
+
   return (
     <MobilePageShell>
       <div className="grid gap-6">
         <PageHeader
           label="STEP 3"
-          title="結果を見る"
-          description="ここに共通点や、会話が盛り上がりそうな話題を表示します。"
+          title="回答が集まりました"
+          description={
+            <>
+              <span className="block">
+                みんなの回答をもとに結果を表示します
+              </span>
+              <span className="block">準備ができたら結果を見てみよう！</span>
+            </>
+          }
         />
 
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-sm font-bold text-slate-500">仮の結果</p>
-          <p className="mt-2 text-xl font-bold text-slate-900">
-            {gameSession.playerCount}
-            人分の回答をもとに、共通点を表示します。
-          </p>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            参加人数: {gameSession.playerCount}人
-          </p>
+        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+          <h2 className="text-center text-lg font-bold text-slate-800">
+            結果で見られること
+          </h2>
+          <ul className="mt-4 grid gap-3 text-sm font-bold text-slate-700">
+            <li className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 shrink-0 rounded-full bg-sky-400"
+              />
+              質問ごとのみんなの回答
+            </li>
+            <li className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 shrink-0 rounded-full bg-sky-400"
+              />
+              会話のきっかけ
+            </li>
+            <li className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 shrink-0 rounded-full bg-sky-400"
+              />
+              みんなの共通点まとめ
+            </li>
+          </ul>
         </div>
 
-        <div className="grid gap-3">
-          <ButtonLink to={paths.players} onClick={clearGameSession}>
-            もう一度遊ぶ
-          </ButtonLink>
-          <TextLink to={paths.home} onClick={clearGameSession}>
-            ホームへ戻る
-          </TextLink>
-        </div>
+        <ButtonLink to={paths.questionResults}>結果を見る</ButtonLink>
       </div>
     </MobilePageShell>
   );

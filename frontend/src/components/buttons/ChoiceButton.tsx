@@ -16,7 +16,7 @@ export function ChoiceButton({
     <button
       type={type}
       aria-pressed={selected}
-      className={`rounded-2xl border px-5 py-5 text-center text-lg font-bold transition-all focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200 ${
+      className={`min-h-14 rounded-2xl border px-4 py-3 text-center text-lg font-bold transition-all focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-sky-200 ${
         selected
           ? "scale-105 border-sky-400 bg-sky-400 text-white shadow-md shadow-sky-400/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-sky-200 hover:bg-sky-50"

@@ -1,3 +1,6 @@
+import { questions } from "./questions";
+import { clearResultViewSession } from "./resultViewSession";
+
 export type AnswerValue = string;
 export type QuestionId = string;
 export type QuestionAnswer = AnswerValue | null;
@@ -7,26 +10,33 @@ export type PlayerAnswer = {
   answers: Record<QuestionId, QuestionAnswer>;
 };
 
+export type QuestionProgress = {
+  screen: "intro" | "question" | "identity" | "complete";
+  currentPlayerOrderIndex: number;
+  currentQuestionIndex: number;
+};
+
 export type GameSession = {
   playerCount: number;
   playerOrder: number[];
+  resultPlayerOrder: number[];
   questionIds: QuestionId[];
   answers: PlayerAnswer[];
+  questionProgress: QuestionProgress;
 };
 
-export const DEFAULT_QUESTION_IDS = [
-  "bloodType",
-  "usualStyle",
-  "holidayStyle",
-  "uncomfortablePlace",
-  "specialAbility",
-  "loveOrFriendship",
-  "decisionStyle",
-  "motivation",
-] as const satisfies readonly QuestionId[];
+export const DEFAULT_QUESTION_IDS: readonly QuestionId[] = questions.map(
+  (question) => question.id,
+);
 
 const GAME_SESSION_STORAGE_KEY = "commonFinderGame";
 const validPlayerCounts = [2, 3, 4];
+const validAnswerIdsByQuestionId = new Map(
+  questions.map((question) => [
+    question.id,
+    new Set(question.options.map((option) => option.id)),
+  ]),
+);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -37,19 +47,50 @@ function isGameSession(value: unknown): value is GameSession {
     return false;
   }
 
-  const { playerCount, playerOrder, questionIds, answers } = value;
+  const {
+    playerCount,
+    playerOrder,
+    resultPlayerOrder,
+    questionIds,
+    answers,
+    questionProgress,
+  } = value;
 
   if (
     typeof playerCount !== "number" ||
     !validPlayerCounts.includes(playerCount) ||
     !Array.isArray(playerOrder) ||
     playerOrder.length !== playerCount ||
+    !Array.isArray(resultPlayerOrder) ||
+    resultPlayerOrder.length !== playerCount ||
     !Array.isArray(questionIds) ||
-    questionIds.length === 0 ||
+    questionIds.length !== DEFAULT_QUESTION_IDS.length ||
     !questionIds.every((questionId) => typeof questionId === "string") ||
-    new Set(questionIds).size !== questionIds.length ||
+    !questionIds.every(
+      (questionId, index) => questionId === DEFAULT_QUESTION_IDS[index],
+    ) ||
     !Array.isArray(answers) ||
-    answers.length !== playerCount
+    answers.length !== playerCount ||
+    !isRecord(questionProgress)
+  ) {
+    return false;
+  }
+
+  const { screen, currentPlayerOrderIndex, currentQuestionIndex } =
+    questionProgress;
+
+  if (
+    !["intro", "question", "identity", "complete"].includes(
+      typeof screen === "string" ? screen : "",
+    ) ||
+    typeof currentPlayerOrderIndex !== "number" ||
+    !Number.isInteger(currentPlayerOrderIndex) ||
+    currentPlayerOrderIndex < 0 ||
+    currentPlayerOrderIndex >= playerCount ||
+    typeof currentQuestionIndex !== "number" ||
+    !Number.isInteger(currentQuestionIndex) ||
+    currentQuestionIndex < 0 ||
+    currentQuestionIndex >= questionIds.length
   ) {
     return false;
   }
@@ -58,20 +99,23 @@ function isGameSession(value: unknown): value is GameSession {
     Array.from({ length: playerCount }, (_, index) => index),
   );
 
-  if (
-    !playerOrder.every(
+  const isValidPlayerOrder = (order: unknown[]) =>
+    order.every(
       (playerIndex) =>
         typeof playerIndex === "number" &&
         expectedPlayerIndexes.has(playerIndex),
-    ) ||
-    new Set(playerOrder).size !== playerCount
+    ) && new Set(order).size === playerCount;
+
+  if (
+    !isValidPlayerOrder(playerOrder) ||
+    !isValidPlayerOrder(resultPlayerOrder)
   ) {
     return false;
   }
 
   const answerPlayerIndexes = new Set<number>();
 
-  return answers.every((playerAnswer) => {
+  const hasValidAnswers = answers.every((playerAnswer) => {
     if (!isRecord(playerAnswer)) {
       return false;
     }
@@ -79,6 +123,10 @@ function isGameSession(value: unknown): value is GameSession {
     const { playerIndex, answers: playerAnswers } = playerAnswer;
 
     if (!isRecord(playerAnswers)) {
+      return false;
+    }
+
+    if (Object.keys(playerAnswers).length !== questionIds.length) {
       return false;
     }
 
@@ -94,13 +142,34 @@ function isGameSession(value: unknown): value is GameSession {
 
     return questionIds.every((questionId) => {
       const answer = playerAnswers[questionId];
-      return answer === null || typeof answer === "string";
+      return (
+        answer === null ||
+        (typeof answer === "string" &&
+          validAnswerIdsByQuestionId.get(questionId)?.has(answer) === true)
+      );
     });
   });
+
+  if (!hasValidAnswers) {
+    return false;
+  }
+
+  return screen !== "complete" || isGameSessionComplete(value as GameSession);
 }
 
 function createPlayerOrder(playerCount: number): number[] {
   return Array.from({ length: playerCount }, (_, index) => index);
+}
+
+function createShuffledPlayerOrder(playerCount: number): number[] {
+  const order = createPlayerOrder(playerCount);
+
+  for (let index = order.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [order[index], order[randomIndex]] = [order[randomIndex], order[index]];
+  }
+
+  return order;
 }
 
 function createEmptyAnswerRecord(
@@ -121,16 +190,27 @@ function createEmptyAnswers(
   }));
 }
 
-export function createGameSession(
-  playerCount: number,
-  questionIds: readonly QuestionId[] = DEFAULT_QUESTION_IDS,
-): GameSession {
+export function createGameSession(playerCount: number): GameSession {
   return {
     playerCount,
     playerOrder: createPlayerOrder(playerCount),
-    questionIds: [...questionIds],
-    answers: createEmptyAnswers(playerCount, questionIds),
+    resultPlayerOrder: createShuffledPlayerOrder(playerCount),
+    questionIds: [...DEFAULT_QUESTION_IDS],
+    answers: createEmptyAnswers(playerCount, DEFAULT_QUESTION_IDS),
+    questionProgress: {
+      screen: "intro",
+      currentPlayerOrderIndex: 0,
+      currentQuestionIndex: 0,
+    },
   };
+}
+
+export function isGameSessionComplete(session: GameSession): boolean {
+  return session.answers.every((playerAnswer) =>
+    session.questionIds.every(
+      (questionId) => playerAnswer.answers[questionId] !== null,
+    ),
+  );
 }
 
 export function loadGameSession(): GameSession | null {
@@ -150,6 +230,16 @@ export function loadGameSession(): GameSession | null {
 
 export function saveGameSession(session: GameSession) {
   sessionStorage.setItem(GAME_SESSION_STORAGE_KEY, JSON.stringify(session));
+}
+
+export function saveQuestionProgress(
+  session: GameSession,
+  questionProgress: QuestionProgress,
+): GameSession {
+  return {
+    ...session,
+    questionProgress,
+  };
 }
 
 export function savePlayerAnswer(
@@ -178,4 +268,5 @@ export function savePlayerAnswer(
 
 export function clearGameSession() {
   sessionStorage.removeItem(GAME_SESSION_STORAGE_KEY);
+  clearResultViewSession();
 }

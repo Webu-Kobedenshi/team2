@@ -6,6 +6,7 @@ import { TextLink } from "../components/links";
 import { MobilePageShell } from "../components/MobilePageShell";
 import { PageHeader } from "../components/PageHeader";
 import { createGameSession, saveGameSession } from "../features/gameSession";
+import { clearResultViewSession } from "../features/resultViewSession";
 import { paths } from "../routes";
 
 const playerCounts = [2, 3, 4];
@@ -17,6 +18,7 @@ export function PlayerSelect() {
   const handleConfirm = () => {
     if (selectedCount === null) return;
 
+    clearResultViewSession();
     saveGameSession(createGameSession(selectedCount));
     navigate(paths.questions);
   };
@@ -27,11 +29,11 @@ export function PlayerSelect() {
         <PageHeader
           label="STEP 1"
           title="遊ぶ人数を選ぶ"
-          description="一緒に遊ぶ人数を選んで、決定を押してください。"
+          description="一緒に遊ぶ人数を選んで、決定を押してね！"
         />
 
         <div className="mt-6">
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {playerCounts.map((count) => (
               <ChoiceButton
                 key={count}

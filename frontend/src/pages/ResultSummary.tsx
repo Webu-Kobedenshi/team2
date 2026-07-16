@@ -23,11 +23,18 @@ export function ResultSummary() {
   }
 
   const { players } = analyzeResults(gameSession.answers, questions);
-  const resultPlayers = [...players].sort(
-    (firstPlayer, secondPlayer) =>
-      gameSession.resultPlayerOrder.indexOf(firstPlayer.playerIndex) -
-      gameSession.resultPlayerOrder.indexOf(secondPlayer.playerIndex),
+  const playerByIndex = new Map(
+    players.map((player) => [player.playerIndex, player]),
   );
+  const resultPlayers = gameSession.resultPlayerOrder.map((playerIndex) => {
+    const player = playerByIndex.get(playerIndex);
+
+    if (!player) {
+      throw new Error(`Unknown playerIndex: ${playerIndex}`);
+    }
+
+    return player;
+  });
   const getPlayerProfile = createPlayerProfileLookup(
     resultPlayers.map((player) => player.playerIndex),
   );

@@ -104,11 +104,15 @@ export function QuestionFlow() {
   }
 
   function confirmLeavingQuestionFlow() {
+    allowNavigationRef.current = true;
+    clearGameSession();
+
     if (navigationBlocker.state === "blocked") {
-      navigationBlocker.reset();
+      navigationBlocker.proceed();
+      return;
     }
 
-    leaveQuestionFlow();
+    navigate(paths.players);
   }
 
   function cancelLeavingQuestionFlow() {

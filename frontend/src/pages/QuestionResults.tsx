@@ -32,17 +32,8 @@ export function QuestionResults() {
     return <Navigate to={paths.questions} replace />;
   }
 
-  const { players, questionResults } = analyzeResults(
-    gameSession.answers,
-    questions,
-  );
-  const orderedPlayerIndexes = [...players]
-    .sort(
-      (firstPlayer, secondPlayer) =>
-        gameSession.resultPlayerOrder.indexOf(firstPlayer.playerIndex) -
-        gameSession.resultPlayerOrder.indexOf(secondPlayer.playerIndex),
-    )
-    .map((player) => player.playerIndex);
+  const { questionResults } = analyzeResults(gameSession.answers, questions);
+  const orderedPlayerIndexes = gameSession.resultPlayerOrder;
   const getPlayerProfile = createPlayerProfileLookup(orderedPlayerIndexes);
 
   function handleActiveQuestionChange(questionIndex: number) {

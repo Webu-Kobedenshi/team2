@@ -5,7 +5,6 @@ import type { PlayerProfile } from "./playerProfiles";
 
 type PlayerResultAccordionProps = {
   player: ResultPlayer;
-  profile: PlayerProfile;
   isOpen: boolean;
   onToggle: () => void;
   getPlayerProfile: (playerIndex: number) => PlayerProfile;
@@ -13,11 +12,11 @@ type PlayerResultAccordionProps = {
 
 export function PlayerResultAccordion({
   player,
-  profile,
   isOpen,
   onToggle,
   getPlayerProfile,
 }: PlayerResultAccordionProps) {
+  const profile = getPlayerProfile(player.playerIndex);
   const contentId = `player-result-${player.playerIndex}`;
 
   return (

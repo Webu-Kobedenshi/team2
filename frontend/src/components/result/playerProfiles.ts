@@ -20,6 +20,13 @@ export function createPlayerProfileLookup(
     ]),
   );
 
-  return (playerIndex: number) =>
-    profileByPlayerIndex.get(playerIndex) ?? playerProfiles[0];
+  return (playerIndex: number) => {
+    const profile = profileByPlayerIndex.get(playerIndex);
+
+    if (!profile) {
+      throw new Error(`Unknown playerIndex: ${playerIndex}`);
+    }
+
+    return profile;
+  };
 }

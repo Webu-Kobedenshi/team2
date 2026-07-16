@@ -34,7 +34,6 @@ export function PlayerSummary({
           <PlayerResultAccordion
             key={player.playerIndex}
             player={player}
-            profile={getPlayerProfile(player.playerIndex)}
             isOpen={player.playerIndex === expandedPlayerIndex}
             onToggle={() =>
               setExpandedPlayerIndex((currentPlayerIndex) =>
